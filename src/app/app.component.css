@@ -1,0 +1,14 @@
+.bg-canvas {
+    background-image: url("../assets/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100vh;
+}
+
+.toolbar {
+    background-color: #57d3ad !important;
+}
+
+.align-center {
+    margin: 0 auto;
+}

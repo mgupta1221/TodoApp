@@ -1,0 +1,83 @@
+<div class="container">
+    <header>
+        <h5 class="text-center">My todos</h5>
+    </header>
+    <div class="add-todo" (click)="openEditModal(null, false)">
+        <div>
+            <a class="button circle" href="#">+</a>
+        </div>
+    </div>
+    <p>Total Completed Todos: {{ totalCompleted }}</p>
+    <div class="table-responsive">
+        <div *ngIf="todos.length==0" class="text-center">
+            No pending Todo items..
+        </div>
+        <table class="table todo-list" *ngIf="todos.length>0">
+            <thead>
+                <tr class="info">
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions </th>
+                    <th>Mark as completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let todo of todos;">
+                    <td>{{todo.id}}</td>
+                    <td [ngClass]="{'todo-markedDone': todo.isCompleted === true}">{{todo.title }}</td>
+                    <td [ngClass]="{'todo-markedDone': todo.isCompleted === true}">{{todo.description}}</td>
+                    <td class="actions-col">
+                        <div (click)="openEditModal(todo, true)">
+                            <fa-icon [icon]="faPen" style="color:cornflowerblue;cursor: pointer;"></fa-icon>
+                        </div>
+                        <div (click)="deleteTodo(todo)">
+                            <fa-icon [icon]="faTrash" style="color:crimson;;cursor: pointer;"></fa-icon>
+                        </div>                       
+                    </td>
+                    <td>
+                        <input type="checkbox" [checked]="todo.isCompleted" (change)="markAsCompleted(todo.id)" />
+                    </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" id="editModal" #editModal>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{todoAction}} Task</h5>
+                    <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="todoEditForm" (ngSubmit)="onTodoSubmit()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" placeholder="Enter title" formControlName="title">
+
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="exampleInputPassword1">Description</label>
+                            <input type="text" class="form-control" placeholder="Enter description"
+                                formControlName="description">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        All rights reserved.
+    </footer>
+</div>
